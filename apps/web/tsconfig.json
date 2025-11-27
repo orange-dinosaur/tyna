@@ -2,7 +2,7 @@
     "extends": "@workspace/typescript-config/nextjs.json",
     "compilerOptions": {
         "skipLibCheck": true,
-        "typeRoots": ["./node_modules/@types", "./@types"],
+        "types": ["node", "react", "react-dom"],
         "paths": {
             "@/*": ["./*"],
             "@workspace/ui-web/*": ["../../packages/ui-web/src/*"]
