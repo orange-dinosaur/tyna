@@ -25,7 +25,10 @@ export function LoginForm({
         <div className={cn('flex flex-col gap-6', className)} {...props}>
             <Card>
                 <CardHeader className="text-center">
-                    <CardTitle className="text-xl">Welcome back</CardTitle>
+                    <CardTitle className="text-xl">
+                        Welcome back to{' '}
+                        {process.env.NEXT_PUBLIC_APP_NAME || 'our app'}
+                    </CardTitle>
                     <CardDescription>
                         Login with your Apple or Google account
                     </CardDescription>

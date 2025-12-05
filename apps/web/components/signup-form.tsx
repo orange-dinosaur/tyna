@@ -25,7 +25,8 @@ export function SignupForm({
             <Card>
                 <CardHeader className="text-center">
                     <CardTitle className="text-xl">
-                        Create your account
+                        Create your {process.env.NEXT_PUBLIC_APP_NAME || 'app'}{' '}
+                        account
                     </CardTitle>
                     <CardDescription>
                         Enter your email below to create your account
