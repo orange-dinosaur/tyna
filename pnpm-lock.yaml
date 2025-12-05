@@ -120,9 +120,6 @@ importers:
       '@workspace/assets':
         specifier: workspace:*
         version: link:../../packages/assets
-      '@workspace/db':
-        specifier: workspace:*
-        version: link:../../packages/db
       '@workspace/ui-web':
         specifier: workspace:*
         version: link:../../packages/ui-web
