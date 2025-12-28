@@ -8,24 +8,26 @@
         "check-types": "tsc --noEmit",
         "db:generate:migration": "drizzle-kit generate",
         "db:migrate": "drizzle-kit migrate",
-        "db:studio": "drizzle-kit studio"
+        "db:studio": "drizzle-kit studio",
+        "db:studio:open": "open-cli https://local.drizzle.studio"
     },
     "exports": {
         ".": "./src/index.ts",
         "./schema": "./src/schema.ts"
     },
     "dependencies": {
-        "dotenv": "^17.2.3",
-        "drizzle-orm": "^0.45.1",
-        "pg": "^8.16.3",
         "@workspace/eslint-config": "workspace:*",
         "@workspace/typescript-config": "workspace:*",
+        "dotenv": "^17.2.3",
+        "drizzle-orm": "^0.45.1",
         "eslint": "^9.32.0",
+        "pg": "^8.16.3",
         "typescript": "^5.9.2"
     },
     "devDependencies": {
         "@types/pg": "^8.16.0",
         "drizzle-kit": "^0.31.8",
+        "open-cli": "^8.0.0",
         "tsx": "^4.7.1"
     }
 }
