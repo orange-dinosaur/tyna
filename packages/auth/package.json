@@ -1,0 +1,28 @@
+{
+    "name": "@workspace/auth",
+    "version": "0.0.0",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "build": "tsc",
+        "start": "node dist/index.js",
+        "lint": "eslint . --max-warnings 0",
+        "check-types": "tsc --noEmit",
+        "db:migrate": "pnpm dlx better-auth migrate"
+    },
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "dependencies": {
+        "@workspace/db": "workspace:*",
+        "better-auth": "^1.4.9"
+    },
+    "devDependencies": {
+        "@workspace/eslint-config": "workspace:*",
+        "@workspace/typescript-config": "workspace:*",
+        "eslint": "^9.32.0",
+        "tsx": "^4.7.1",
+        "typescript": "^5.9.2"
+    }
+}
