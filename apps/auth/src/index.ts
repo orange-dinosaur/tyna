@@ -4,6 +4,10 @@ import { auth } from '@/lib/auth.js';
 
 const app = new Hono();
 
+app.get('/', (c) => {
+    return c.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // Health check endpoint
 app.get('/health', (c) => {
     return c.json({ status: 'ok', timestamp: new Date().toISOString() });
