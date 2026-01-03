@@ -5,17 +5,27 @@
         "dev": "tsx --env-file=.env --watch src/index.ts",
         "build": "tsc",
         "start": "node dist/index.js",
+        "db:generate:migration": "drizzle-kit generate",
+        "db:migrate": "drizzle-kit migrate",
+        "db:studio": "drizzle-kit studio",
+        "db:studio:open": "open-cli https://local.drizzle.studio",
         "api:reference": "open-cli http://localhost:3001/api/auth/reference"
     },
     "dependencies": {
         "@hono/node-server": "^1.19.6",
         "@workspace/auth": "workspace:*",
-        "hono": "^4.11.3"
+        "better-auth": "^1.4.9",
+        "dotenv": "^17.2.3",
+        "drizzle-orm": "^0.45.1",
+        "hono": "^4.11.3",
+        "pg": "^8.16.3"
     },
     "devDependencies": {
         "@types/node": "^20.11.17",
+        "@types/pg": "^8.16.0",
+        "drizzle-kit": "^0.31.8",
         "open-cli": "^8.0.0",
-        "tsx": "^4.7.1",
+        "tsx": "^4.21.0",
         "typescript": "^5.8.3"
     }
 }
