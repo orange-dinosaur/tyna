@@ -2,6 +2,7 @@
 
 import { LoginFormState } from '@/lib/types/auth';
 import { loginSchema } from '@/lib/schemas/auth';
+import { authClient } from '@/lib/auth-client';
 
 export async function login(
     inistialState: LoginFormState,
@@ -38,7 +39,19 @@ export async function login(
     }
 
     try {
-        console.log('returnState', returnState);
+        const loginResult = await authClient.signIn.email({
+            email: validatedFields.data?.email,
+            password: validatedFields.data?.password,
+        });
+
+        if (loginResult.error) {
+            returnState.status = loginResult.error.status;
+            returnState.message = loginResult.error.message;
+            return returnState;
+        }
+
+        // TODO: redirect to user homepage
+        console.log(loginResult);
     } catch (error) {
         console.error(error);
         returnState.status = 500;

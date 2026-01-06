@@ -2,6 +2,7 @@
 
 import { RegisterFormState } from '@/lib/types/auth';
 import { signupSchema } from '@/lib/schemas/auth';
+import { authClient } from '@/lib/auth-client';
 
 export async function signup(
     inistialState: RegisterFormState,
@@ -46,7 +47,20 @@ export async function signup(
     }
 
     try {
-        console.log('returnState', returnState);
+        const signupResult = await authClient.signUp.email({
+            name: validatedFields.data?.username,
+            email: validatedFields.data?.email,
+            password: validatedFields.data?.password,
+        });
+
+        if (signupResult.error) {
+            returnState.status = signupResult.error.status;
+            returnState.message = signupResult.error.message;
+            return returnState;
+        }
+
+        // TODO: handle email verification
+        console.log(signupResult);
     } catch (error) {
         console.error(error);
         returnState.status = 500;
