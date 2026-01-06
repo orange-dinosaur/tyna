@@ -3,6 +3,7 @@
 import { LoginFormState } from '@/lib/types/auth';
 import { loginSchema } from '@/lib/schemas/auth';
 import { authClient } from '@/lib/auth-client';
+import { redirect } from 'next/navigation';
 
 export async function login(
     inistialState: LoginFormState,
@@ -38,6 +39,7 @@ export async function login(
         return returnState;
     }
 
+    let isSuccess = false;
     try {
         const loginResult = await authClient.signIn.email({
             email: validatedFields.data?.email,
@@ -49,13 +51,15 @@ export async function login(
             returnState.message = loginResult.error.message;
             return returnState;
         }
-
-        // TODO: redirect to user homepage
-        console.log(loginResult);
+        isSuccess = true;
     } catch (error) {
         console.error(error);
         returnState.status = 500;
         returnState.message = 'Internal Server Error';
+    }
+
+    if (isSuccess) {
+        redirect('/home');
     }
 
     return returnState;
