@@ -11,7 +11,8 @@ import {
 import { Input } from '@workspace/ui-web/components/input';
 import { signup } from '@/lib/actions/auth/signup';
 import { RegisterFormState } from '@/lib/types/auth';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import { Spinner } from '@workspace/ui-web/components/spinner';
 
 export function SignupForm({
@@ -20,6 +21,7 @@ export function SignupForm({
 }: React.ComponentProps<'div'>) {
     const initialState: RegisterFormState = {};
     const [state, formAction, pending] = useActionState(signup, initialState);
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
@@ -49,14 +51,32 @@ export function SignupForm({
                     </Field>
                     <Field>
                         <FieldLabel htmlFor="password">Password</FieldLabel>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            defaultValue={state?.password}
-                            placeholder="••••••••"
-                            required
-                        />
+                        <div className="relative">
+                            <Input
+                                id="password"
+                                name="password"
+                                type={showPassword ? 'text' : 'password'}
+                                defaultValue={state?.password}
+                                placeholder="••••••••"
+                                required
+                                className="pr-10"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-none"
+                                aria-label={
+                                    showPassword
+                                        ? 'Hide password'
+                                        : 'Show password'
+                                }>
+                                {showPassword ? (
+                                    <EyeOff className="h-4 w-4" />
+                                ) : (
+                                    <Eye className="h-4 w-4" />
+                                )}
+                            </button>
+                        </div>
                     </Field>
 
                     <Field>
