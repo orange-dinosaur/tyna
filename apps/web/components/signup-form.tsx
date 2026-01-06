@@ -17,17 +17,40 @@ export function SignupForm({
             <form>
                 <FieldGroup>
                     <Field>
+                        <FieldLabel htmlFor="username">Username</FieldLabel>
+                        <Input
+                            id="username"
+                            name="username"
+                            type="text"
+                            placeholder="username"
+                            required
+                        />
+                    </Field>
+                    <Field>
                         <FieldLabel htmlFor="email">Email</FieldLabel>
                         <Input
                             id="email"
+                            name="email"
                             type="email"
                             placeholder="m@example.com"
                             required
                         />
                     </Field>
                     <Field>
+                        <FieldLabel htmlFor="password">Password</FieldLabel>
+                        <Input
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="••••••••"
+                            required
+                        />
+                    </Field>
+
+                    <Field>
                         <Button type="submit">Create Account</Button>
                     </Field>
+
                     <FieldSeparator>Or</FieldSeparator>
                     <Field className="grid gap-4 sm:grid-cols-2">
                         <Button variant="outline" type="button" disabled>
