@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@workspace/ui-web/lib/utils';
 import { Button } from '@workspace/ui-web/components/button';
 import {
@@ -7,14 +9,21 @@ import {
     FieldSeparator,
 } from '@workspace/ui-web/components/field';
 import { Input } from '@workspace/ui-web/components/input';
+import { signup } from '@/lib/actions/auth/signup';
+import { RegisterFormState } from '@/lib/types/auth';
+import { useActionState } from 'react';
+import { Spinner } from '@workspace/ui-web/components/spinner';
 
 export function SignupForm({
     className,
     ...props
 }: React.ComponentProps<'div'>) {
+    const initialState: RegisterFormState = {};
+    const [state, formAction, pending] = useActionState(signup, initialState);
+
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
-            <form>
+            <form action={formAction}>
                 <FieldGroup>
                     <Field>
                         <FieldLabel htmlFor="username">Username</FieldLabel>
@@ -22,6 +31,7 @@ export function SignupForm({
                             id="username"
                             name="username"
                             type="text"
+                            defaultValue={state?.username}
                             placeholder="username"
                             required
                         />
@@ -32,6 +42,7 @@ export function SignupForm({
                             id="email"
                             name="email"
                             type="email"
+                            defaultValue={state?.email}
                             placeholder="m@example.com"
                             required
                         />
@@ -42,14 +53,21 @@ export function SignupForm({
                             id="password"
                             name="password"
                             type="password"
+                            defaultValue={state?.password}
                             placeholder="••••••••"
                             required
                         />
                     </Field>
 
                     <Field>
-                        <Button type="submit">Create Account</Button>
+                        <Button type="submit" disabled={pending}>
+                            {pending && <Spinner />} Create Account
+                        </Button>
                     </Field>
+
+                    {state?.message && (
+                        <p className="text-red-500 text-sm">{state?.message}</p>
+                    )}
 
                     <FieldSeparator>Or</FieldSeparator>
                     <Field className="grid gap-4 sm:grid-cols-2">

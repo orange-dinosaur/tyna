@@ -1,5 +1,8 @@
+'use client';
+
 import { cn } from '@workspace/ui-web/lib/utils';
 import { Button } from '@workspace/ui-web/components/button';
+import { Spinner } from '@workspace/ui-web/components/spinner';
 import {
     Field,
     FieldGroup,
@@ -7,14 +10,20 @@ import {
     FieldSeparator,
 } from '@workspace/ui-web/components/field';
 import { Input } from '@workspace/ui-web/components/input';
+import { useActionState } from 'react';
+import { LoginFormState } from '@/lib/types/auth';
+import { login } from '@/lib/actions/auth/login';
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentProps<'div'>) {
+    const initialState: LoginFormState = {};
+    const [state, formAction, pending] = useActionState(login, initialState);
+
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
-            <form>
+            <form action={formAction}>
                 <FieldGroup>
                     <Field>
                         <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -22,6 +31,7 @@ export function LoginForm({
                             id="email"
                             name="email"
                             type="email"
+                            defaultValue={state?.email}
                             placeholder="m@example.com"
                             required
                         />
@@ -32,14 +42,22 @@ export function LoginForm({
                             id="password"
                             name="password"
                             type="password"
+                            defaultValue={state?.password}
                             placeholder="••••••••"
                             required
                         />
                     </Field>
 
                     <Field>
-                        <Button type="submit">Login</Button>
+                        <Button type="submit" disabled={pending}>
+                            {pending && <Spinner />}
+                            Login
+                        </Button>
                     </Field>
+
+                    {state?.message && (
+                        <p className="text-red-500 text-sm">{state?.message}</p>
+                    )}
 
                     <FieldSeparator>Or</FieldSeparator>
 
