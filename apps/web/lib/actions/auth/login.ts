@@ -44,6 +44,7 @@ export async function login(
         const loginResult = await authClient.signIn.email({
             email: validatedFields.data?.email,
             password: validatedFields.data?.password,
+            rememberMe: true,
         });
 
         if (loginResult.error) {
