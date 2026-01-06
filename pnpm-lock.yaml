@@ -75,6 +75,9 @@ importers:
       '@workspace/ui-web':
         specifier: workspace:*
         version: link:../../packages/ui-web
+      better-auth:
+        specifier: ^1.4.9
+        version: 1.4.9(drizzle-kit@0.31.8)(drizzle-orm@0.45.1(@types/pg@8.16.0)(kysely@0.28.9)(pg@8.16.3))(next@16.0.10(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(pg@8.16.3)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       lucide-react:
         specifier: ^0.475.0
         version: 0.475.0(react@19.2.1)
