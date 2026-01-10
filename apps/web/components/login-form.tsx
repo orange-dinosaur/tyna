@@ -10,22 +10,41 @@ import {
     FieldSeparator,
 } from '@workspace/ui-web/components/field';
 import { Input } from '@workspace/ui-web/components/input';
-import { useActionState, useState } from 'react';
+import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { LoginFormState } from '@/lib/types/auth';
 import { login } from '@/lib/actions/auth/login';
+import { useRouter } from 'next/navigation';
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentProps<'div'>) {
-    const initialState: LoginFormState = {};
-    const [state, formAction, pending] = useActionState(login, initialState);
+    const router = useRouter();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState<string | null>(null);
+    const [pending, setPending] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        setError(null);
+        setPending(true);
+
+        const result = await login(email, password);
+
+        if (result.status !== 200) {
+            setError(result.message || 'Login failed');
+            setPending(false);
+            return;
+        }
+
+        router.push('/home');
+    }
 
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
-            <form action={formAction}>
+            <form onSubmit={handleSubmit}>
                 <FieldGroup>
                     <Field>
                         <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -33,7 +52,8 @@ export function LoginForm({
                             id="email"
                             name="email"
                             type="email"
-                            defaultValue={state?.email}
+                            defaultValue={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder="m@example.com"
                             required
                         />
@@ -45,7 +65,8 @@ export function LoginForm({
                                 id="password"
                                 name="password"
                                 type={showPassword ? 'text' : 'password'}
-                                defaultValue={state?.password}
+                                defaultValue={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 placeholder="••••••••"
                                 required
                                 className="pr-10"
@@ -75,9 +96,7 @@ export function LoginForm({
                         </Button>
                     </Field>
 
-                    {state?.message && (
-                        <p className="text-red-500 text-sm">{state?.message}</p>
-                    )}
+                    {error && <p className="text-red-500 text-sm">{error}</p>}
 
                     <FieldSeparator>Or</FieldSeparator>
 

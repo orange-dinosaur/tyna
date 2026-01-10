@@ -1,22 +1,23 @@
-'use server';
+'use client';
 
 import { LoginFormState } from '@/lib/types/auth';
 import { loginSchema } from '@/lib/schemas/auth';
 import { authClient } from '@/lib/auth-client';
-import { redirect } from 'next/navigation';
 
 export async function login(
-    inistialState: LoginFormState,
-    formData: FormData
+    email: string,
+    password: string
 ): Promise<LoginFormState> {
     const validatedFields = loginSchema.safeParse({
-        email: formData.get('email'),
-        password: formData.get('password'),
+        email,
+        password,
     });
 
     const returnState: LoginFormState = {
-        email: validatedFields.data?.email,
-        password: validatedFields.data?.password,
+        email,
+        password,
+        status: 200,
+        message: '',
     };
 
     if (!validatedFields.success) {
@@ -31,15 +32,14 @@ export async function login(
             );
 
         // return directly the fields taken from the formData
-        returnState.email = formData.get('email') as string;
-        returnState.password = formData.get('password') as string;
+        returnState.email = email;
+        returnState.password = password;
 
         returnState.status = 400;
         returnState.message = failedFields.join(', ');
         return returnState;
     }
 
-    let isSuccess = false;
     try {
         const loginResult = await authClient.signIn.email({
             email: validatedFields.data?.email,
@@ -52,15 +52,10 @@ export async function login(
             returnState.message = loginResult.error.message;
             return returnState;
         }
-        isSuccess = true;
     } catch (error) {
         console.error(error);
         returnState.status = 500;
         returnState.message = 'Internal Server Error';
-    }
-
-    if (isSuccess) {
-        redirect('/home');
     }
 
     return returnState;
