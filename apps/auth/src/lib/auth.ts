@@ -8,6 +8,7 @@ export const auth = betterAuth({
     database: drizzleAdapter(db, {
         provider: 'pg',
     }),
+
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
@@ -22,5 +23,8 @@ export const auth = betterAuth({
             });
         },
     },
+
     plugins: [openAPI()],
+
+    trustedOrigins: [process.env.WEB_APP_URL!],
 });
