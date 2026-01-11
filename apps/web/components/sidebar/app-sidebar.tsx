@@ -18,6 +18,7 @@ import {
     SidebarFooter,
     SidebarHeader,
     SidebarRail,
+    SidebarTrigger,
 } from '@workspace/ui-web/components/sidebar';
 import { SidebarLogo } from '@/components/sidebar/sidebar-logo';
 
@@ -64,9 +65,19 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar collapsible="icon" {...props}>
+        <Sidebar
+            collapsible="icon"
+            style={
+                {
+                    '--sidebar-width-icon': '5.5rem',
+                } as React.CSSProperties
+            }
+            {...props}>
             <SidebarHeader>
-                <SidebarLogo />
+                <div className="flex items-center justify-between gap-2 px-2 py-2 group-data-[collapsible=icon]:gap-1 group-data-[collapsible=icon]:px-1">
+                    <SidebarLogo />
+                    <SidebarTrigger className="ml-auto" />
+                </div>
             </SidebarHeader>
 
             <SidebarContent>
