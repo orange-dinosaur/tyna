@@ -10,7 +10,12 @@ export default function ProtectedLayout({
     children: React.ReactNode;
 }) {
     return (
-        <SidebarProvider>
+        <SidebarProvider
+            style={
+                {
+                    '--sidebar-width-icon': '5.5rem',
+                } as React.CSSProperties
+            }>
             <AppSidebar />
             <SidebarInset>{children}</SidebarInset>
         </SidebarProvider>
