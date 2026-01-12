@@ -18,6 +18,8 @@ export async function signup(
         username: validatedFields.data?.username,
         email: validatedFields.data?.email,
         password: validatedFields.data?.password,
+        status: 200,
+        message: '',
     };
 
     if (!validatedFields.success) {
@@ -51,6 +53,8 @@ export async function signup(
             name: validatedFields.data?.username,
             email: validatedFields.data?.email,
             password: validatedFields.data?.password,
+            callbackURL:
+                process.env.NEXT_PUBLIC_VERIFICATION_EMAIL_CALLBACK_URL,
         });
 
         if (signupResult.error) {
@@ -59,8 +63,10 @@ export async function signup(
             return returnState;
         }
 
-        // TODO: handle email verification
-        console.log(signupResult);
+        // if auth is successful clear fields
+        returnState.username = '';
+        returnState.email = '';
+        returnState.password = '';
     } catch (error) {
         console.error(error);
         returnState.status = 500;

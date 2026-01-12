@@ -12,8 +12,9 @@ import { Input } from '@workspace/ui-web/components/input';
 import { signup } from '@/lib/actions/auth/signup';
 import { RegisterFormState } from '@/lib/types/auth';
 import { useActionState, useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Check } from 'lucide-react';
 import { Spinner } from '@workspace/ui-web/components/spinner';
+import Link from 'next/link';
 
 export function SignupForm({
     className,
@@ -22,6 +23,31 @@ export function SignupForm({
     const initialState: RegisterFormState = {};
     const [state, formAction, pending] = useActionState(signup, initialState);
     const [showPassword, setShowPassword] = useState(false);
+
+    if (state?.status === 200) {
+        return (
+            <div
+                className={cn(
+                    'flex flex-col gap-6 items-center text-center',
+                    className
+                )}
+                {...props}>
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-500/10">
+                    <Check className="h-10 w-10 text-green-500" />
+                </div>
+                <div className="space-y-2">
+                    <h3 className="text-xl font-semibold">Check your email</h3>
+                    <p className="text-muted-foreground text-sm max-w-xs mx-auto">
+                        We&apos;ve sent a verification link to your email
+                        address. Please verify your email to continue.
+                    </p>
+                </div>
+                <Button asChild className="w-full">
+                    <Link href="/login">Go to Login</Link>
+                </Button>
+            </div>
+        );
+    }
 
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
