@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
 
-const protectedRoutes = ['/home'];
+const protectedRoutes = [
+    '/home',
+    '/search',
+    '/favorites',
+    '/saved',
+    '/statistics',
+    '/goals',
+];
 const authRoutes = ['/login', '/signup'];
 
 export default async function proxy(request: NextRequest) {
@@ -29,5 +36,15 @@ export default async function proxy(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/', '/login', '/signup', '/home/:path*'],
+    matcher: [
+        '/',
+        '/login',
+        '/signup',
+        '/home/:path*',
+        '/search/:path*',
+        '/favorites/:path*',
+        '/saved/:path*',
+        '/statistics/:path*',
+        '/goals/:path*',
+    ],
 };
