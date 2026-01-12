@@ -12,3 +12,8 @@ export type RegisterFormState = {
     email?: string;
     password?: string;
 };
+
+export type LogoutFormState = {
+    status?: number;
+    message?: string;
+};

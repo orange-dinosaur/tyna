@@ -21,6 +21,10 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@workspace/ui-web/components/sidebar';
+import { toast } from '@workspace/ui-web/components/sonner';
+import { useState } from 'react';
+import { logout } from '@/lib/actions/auth/logout';
+import { useRouter } from 'next/navigation';
 
 export function NavUser({
     user,
@@ -33,6 +37,24 @@ export function NavUser({
 }) {
     const { isMobile } = useSidebar();
 
+    const router = useRouter();
+    const [pending, setPending] = useState(false);
+
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        setPending(true);
+
+        const result = await logout();
+
+        if (result.status !== 200) {
+            toast.error(result.message || 'Logout failed');
+            setPending(false);
+            return;
+        }
+
+        router.push('/login');
+    }
+
     return (
         <SidebarMenu>
             <SidebarMenuItem>
@@ -40,7 +62,7 @@ export function NavUser({
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuButton
                             size="lg"
-                            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+                            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer">
                             <Avatar className="h-8 w-8 rounded-lg">
                                 <AvatarImage
                                     src={user.avatar}
@@ -61,6 +83,7 @@ export function NavUser({
                             <ChevronsUpDown className="ml-auto size-4" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
+
                     <DropdownMenuContent
                         className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                         side={isMobile ? 'bottom' : 'right'}
@@ -77,6 +100,7 @@ export function NavUser({
                                         CN
                                     </AvatarFallback>
                                 </Avatar>
+
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-medium">
                                         {user.name}
@@ -99,9 +123,16 @@ export function NavUser({
 
                         <DropdownMenuSeparator /> */}
 
-                        <DropdownMenuItem>
-                            <LogOut />
-                            Log out
+                        <DropdownMenuItem className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+                            <form onSubmit={handleSubmit} className="w-full">
+                                <button
+                                    type="submit"
+                                    disabled={pending}
+                                    className="flex w-full items-center gap-2 cursor-pointer">
+                                    <LogOut />
+                                    Log out
+                                </button>
+                            </form>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
