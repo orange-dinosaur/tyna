@@ -53,6 +53,9 @@ export async function signup(
             name: validatedFields.data?.username,
             email: validatedFields.data?.email,
             password: validatedFields.data?.password,
+            image:
+                process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE_API +
+                validatedFields.data?.email,
             callbackURL:
                 process.env.NEXT_PUBLIC_VERIFICATION_EMAIL_CALLBACK_URL,
         });
