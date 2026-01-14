@@ -79,7 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarHeader>
                 <div className="flex items-center justify-between gap-2 py-2 transition-[justify-content,gap,padding] duration-200 ease-in-out group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-1 group-data-[collapsible=icon]:px-1">
                     <SidebarLogo />
-                    {!isCollapsed && <SidebarTrigger className="ml-auto" />}
+                    {!isCollapsed && <SidebarTrigger className="ml-auto text-emerald-600" />}
                 </div>
             </SidebarHeader>
 
@@ -90,7 +90,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             <SidebarMenuButton
                                 tooltip="Toggle Sidebar"
                                 onClick={toggleSidebar}
-                                className="group-data-[collapsible=icon]:mx-auto">
+                                className="group-data-[collapsible=icon]:mx-auto cursor-pointer text-emerald-600">
                                 <PanelRightIcon />
                                 <span>Toggle Sidebar</span>
                             </SidebarMenuButton>
