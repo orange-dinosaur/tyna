@@ -20,11 +20,11 @@ export function NavMain({
     const router = useRouter();
 
     return (
-        <SidebarGroup>
-            <SidebarMenu>
+        <SidebarGroup className="group-data-[collapsible=icon]:items-center">
+            <SidebarMenu className="group-data-[collapsible=icon]:items-center">
                 {items.map((item) => (
                     <SidebarMenuButton
-                        className="cursor-pointer"
+                        className="cursor-pointer group-data-[collapsible=icon]:mx-auto"
                         tooltip={item.title}
                         key={item.title}
                         onClick={() => router.push(item.url)}>

@@ -19,7 +19,7 @@ export default async function ProtectedLayout({
             <SidebarProvider
                 style={
                     {
-                        '--sidebar-width-icon': '5.5rem',
+                        '--sidebar-width-icon': '3.5rem',
                     } as React.CSSProperties
                 }>
                 <AppSidebar />

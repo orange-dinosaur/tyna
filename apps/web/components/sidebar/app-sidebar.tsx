@@ -6,6 +6,8 @@ import {
     ChartArea,
     Heart,
     House,
+    PanelLeftIcon,
+    PanelRightIcon,
     Search,
     Target,
 } from 'lucide-react';
@@ -17,8 +19,12 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
     SidebarRail,
     SidebarTrigger,
+    useSidebar,
 } from '@workspace/ui-web/components/sidebar';
 import { SidebarLogo } from '@/components/sidebar/sidebar-logo';
 
@@ -58,23 +64,39 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const { state, toggleSidebar } = useSidebar();
+    const isCollapsed = state === 'collapsed';
+
     return (
         <Sidebar
             collapsible="icon"
             style={
                 {
-                    '--sidebar-width-icon': '5.5rem',
+                    '--sidebar-width-icon': '3.5rem',
                 } as React.CSSProperties
             }
             {...props}>
             <SidebarHeader>
-                <div className="flex items-center justify-between gap-2 px-2 py-2 group-data-[collapsible=icon]:gap-1 group-data-[collapsible=icon]:px-1">
+                <div className="flex items-center justify-between gap-2 px-2 py-2 transition-[justify-content,gap,padding] duration-200 ease-in-out group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-1 group-data-[collapsible=icon]:px-1">
                     <SidebarLogo />
-                    <SidebarTrigger className="ml-auto" />
+                    {!isCollapsed && <SidebarTrigger className="ml-auto" />}
                 </div>
             </SidebarHeader>
 
             <SidebarContent>
+                {isCollapsed && (
+                    <SidebarMenu className="group-data-[collapsible=icon]:items-center">
+                        <SidebarMenuItem>
+                            <SidebarMenuButton
+                                tooltip="Toggle Sidebar"
+                                onClick={toggleSidebar}
+                                className="group-data-[collapsible=icon]:mx-auto">
+                                <PanelRightIcon />
+                                <span>Toggle Sidebar</span>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    </SidebarMenu>
+                )}
                 <NavMain items={data.navMain} />
             </SidebarContent>
 

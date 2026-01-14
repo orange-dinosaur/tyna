@@ -83,13 +83,13 @@ export function NavUser() {
         : 'U';
 
     return (
-        <SidebarMenu>
+        <SidebarMenu className="group-data-[collapsible=icon]:items-center">
             <SidebarMenuItem>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuButton
                             size="lg"
-                            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer">
+                            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer group-data-[collapsible=icon]:mx-auto">
                             <Avatar className="h-8 w-8 rounded-full">
                                 <AvatarImage
                                     src={user.image || ''}

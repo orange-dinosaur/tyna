@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { PanelLeftIcon } from 'lucide-react';
+import { PanelLeftIcon, PanelRightIcon } from 'lucide-react';
 
 import { useIsMobile } from '@workspace/ui-web/hooks/use-mobile';
 import { cn } from '@workspace/ui-web/lib/utils';
@@ -227,33 +227,45 @@ function Sidebar({
             {/* This is what handles the sidebar gap on desktop */}
             <div
                 data-slot="sidebar-gap"
+                style={
+                    {
+                        width: 'var(--sidebar-width)',
+                        transition: 'width 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+                    } as React.CSSProperties
+                }
                 className={cn(
-                    'relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear',
-                    'group-data-[collapsible=offcanvas]:w-0',
+                    'relative bg-transparent',
+                    'group-data-[collapsible=offcanvas]:!w-0',
                     'group-data-[side=right]:rotate-180',
                     variant === 'floating' || variant === 'inset'
-                        ? 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]'
-                        : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)'
+                        ? 'group-data-[collapsible=icon]:!w-[calc(var(--sidebar-width-icon)+1rem)]'
+                        : 'group-data-[collapsible=icon]:!w-[var(--sidebar-width-icon)]'
                 )}
             />
             <div
                 data-slot="sidebar-container"
+                style={
+                    {
+                        width: 'var(--sidebar-width)',
+                        transition: 'width 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+                    } as React.CSSProperties
+                }
                 className={cn(
-                    'fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex',
+                    'fixed inset-y-0 z-10 hidden h-svh md:flex',
                     side === 'left'
-                        ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
-                        : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
+                        ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)] group-data-[collapsible=offcanvas]:!transition-[left,width]'
+                        : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)] group-data-[collapsible=offcanvas]:!transition-[right,width]',
                     // Adjust the padding for floating and inset variants.
                     variant === 'floating' || variant === 'inset'
-                        ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'
-                        : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
+                        ? 'p-2 group-data-[collapsible=icon]:!w-[calc(var(--sidebar-width-icon)+1rem+2px)]'
+                        : 'group-data-[collapsible=icon]:!w-[var(--sidebar-width-icon)]',
                     className
                 )}
                 {...props}>
                 <div
                     data-sidebar="sidebar"
                     data-slot="sidebar-inner"
-                    className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm">
+                    className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col overflow-hidden group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm">
                     {children}
                 </div>
             </div>
@@ -266,7 +278,7 @@ function SidebarTrigger({
     onClick,
     ...props
 }: React.ComponentProps<typeof Button>) {
-    const { toggleSidebar } = useSidebar();
+    const { toggleSidebar, state } = useSidebar();
 
     return (
         <Button
@@ -280,7 +292,7 @@ function SidebarTrigger({
                 toggleSidebar();
             }}
             {...props}>
-            <PanelLeftIcon />
+            {state === 'collapsed' ? <PanelRightIcon /> : <PanelLeftIcon />}
             <span className="sr-only">Toggle Sidebar</span>
         </Button>
     );
@@ -415,7 +427,7 @@ function SidebarGroupLabel({
             data-slot="sidebar-group-label"
             data-sidebar="group-label"
             className={cn(
-                'text-sidebar-foreground/70 ring-sidebar-ring flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-hidden transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
+                'text-sidebar-foreground/70 ring-sidebar-ring flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-hidden transition-[margin,opacity] duration-200 ease-in-out focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
                 'group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0',
                 className
             )}
