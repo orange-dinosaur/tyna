@@ -4,12 +4,12 @@ import * as React from 'react';
 import {
     Bookmark,
     ChartArea,
+    Flag,
     Heart,
     House,
     PanelLeftIcon,
     PanelRightIcon,
     Search,
-    Target,
 } from 'lucide-react';
 
 import { NavMain } from '@/components/sidebar/nav-main';
@@ -58,7 +58,7 @@ const data = {
         {
             title: 'Goals',
             url: '/goals',
-            icon: Target,
+            icon: Flag,
         },
     ],
 };

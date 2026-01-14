@@ -24,11 +24,11 @@ export function NavMain({
             <SidebarMenu className="group-data-[collapsible=icon]:items-center">
                 {items.map((item) => (
                     <SidebarMenuButton
-                        className="cursor-pointer group-data-[collapsible=icon]:mx-auto"
+                        className="cursor-pointer group-data-[collapsible=icon]:mx-auto h-11 py-3 text-base [&>svg]:size-5 [&>svg]:fill-current [&>svg]:stroke-current"
                         tooltip={item.title}
                         key={item.title}
                         onClick={() => router.push(item.url)}>
-                        {item.icon && <item.icon />}
+                        {item.icon && <item.icon fill="currentColor" strokeWidth={2.5} />}
                         <span>{item.title}</span>
                     </SidebarMenuButton>
                 ))}
