@@ -77,7 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             }
             {...props}>
             <SidebarHeader>
-                <div className="flex items-center justify-between gap-2 px-2 py-2 transition-[justify-content,gap,padding] duration-200 ease-in-out group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-1 group-data-[collapsible=icon]:px-1">
+                <div className="flex items-center justify-between gap-2 py-2 transition-[justify-content,gap,padding] duration-200 ease-in-out group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-1 group-data-[collapsible=icon]:px-1">
                     <SidebarLogo />
                     {!isCollapsed && <SidebarTrigger className="ml-auto" />}
                 </div>
