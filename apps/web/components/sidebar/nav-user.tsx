@@ -26,10 +26,10 @@ import { toast } from '@workspace/ui-web/components/sonner';
 import { useState } from 'react';
 import { logout } from '@/lib/actions/auth/logout';
 import { useRouter } from 'next/navigation';
-import { useSession } from '@/lib/auth-client';
+import { useUser } from '@/components/user-provider';
 
 export function NavUser() {
-    const { data: session, isPending } = useSession();
+    const { user, isLoading } = useUser();
     const { isMobile } = useSidebar();
 
     const router = useRouter();
@@ -50,10 +50,8 @@ export function NavUser() {
         router.push('/login');
     }
 
-    const user = session?.user;
-
     // Loading state
-    if (isPending) {
+    if (isLoading) {
         return (
             <SidebarMenu>
                 <SidebarMenuItem>
@@ -95,7 +93,7 @@ export function NavUser() {
                             <Avatar className="h-8 w-8 rounded-full">
                                 <AvatarImage
                                     src={user.image || ''}
-                                    alt={user.name}
+                                    alt={user.name || undefined}
                                 />
                                 <AvatarFallback className="rounded-full">
                                     {initials}
@@ -123,7 +121,7 @@ export function NavUser() {
                                 <Avatar className="h-8 w-8 rounded-full">
                                     <AvatarImage
                                         src={user.image || ''}
-                                        alt={user.name}
+                                        alt={user.name || undefined}
                                     />
                                     <AvatarFallback className="rounded-full">
                                         {initials}

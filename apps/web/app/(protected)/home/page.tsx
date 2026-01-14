@@ -10,7 +10,7 @@ export default function Home() {
         <div className="flex flex-1 flex-col gap-6 p-4 lg:flex-row lg:gap-8 lg:p-6">
             {/* Main Content */}
             <div className="min-w-0 flex-1">
-                <WelcomeHeader userName="Alex" streakDays={5} />
+                <WelcomeHeader streakDays={5} />
                 <CurrentlyReading />
                 <BookTabs />
             </div>

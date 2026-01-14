@@ -3,21 +3,28 @@ import {
     SidebarInset,
     SidebarProvider,
 } from '@workspace/ui-web/components/sidebar';
+import { UserProvider } from '@/components/user-provider';
+import { getServerUser } from '@/lib/auth-server';
 
-export default function ProtectedLayout({
+export default async function ProtectedLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    // Fetch user server-side for optimal SSR performance
+    const initialUser = await getServerUser();
+
     return (
-        <SidebarProvider
-            style={
-                {
-                    '--sidebar-width-icon': '5.5rem',
-                } as React.CSSProperties
-            }>
-            <AppSidebar />
-            <SidebarInset>{children}</SidebarInset>
-        </SidebarProvider>
+        <UserProvider initialUser={initialUser}>
+            <SidebarProvider
+                style={
+                    {
+                        '--sidebar-width-icon': '5.5rem',
+                    } as React.CSSProperties
+                }>
+                <AppSidebar />
+                <SidebarInset>{children}</SidebarInset>
+            </SidebarProvider>
+        </UserProvider>
     );
 }
