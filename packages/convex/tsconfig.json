@@ -1,0 +1,7 @@
+{
+    "extends": "@workspace/typescript-config/base.json",
+    "compilerOptions": {
+        "types": ["convex/server"]
+    },
+    "include": ["convex", "api.ts", "react.ts"]
+}
