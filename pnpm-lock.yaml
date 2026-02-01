@@ -72,6 +72,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@workspace/assets':
+        specifier: workspace:*
+        version: link:../../packages/assets
       '@workspace/web-ui':
         specifier: workspace:*
         version: link:../../packages/web-ui
@@ -115,6 +118,8 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+
+  packages/assets: {}
 
   packages/eslint-config:
     devDependencies:
