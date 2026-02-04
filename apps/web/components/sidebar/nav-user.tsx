@@ -21,6 +21,10 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@workspace/web-ui/components/sidebar';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { logout } from '@/lib/actions/auth/logout';
+import { toast } from '@workspace/web-ui/components/sonner';
 
 export function NavUser({
     user,
@@ -32,6 +36,24 @@ export function NavUser({
     };
 }) {
     const { isMobile } = useSidebar();
+
+    const router = useRouter();
+    const [pending, setPending] = useState(false);
+
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        setPending(true);
+
+        const result = await logout();
+
+        if (result.status !== 200) {
+            toast.error(result.message || 'Logout failed');
+            setPending(false);
+            return;
+        }
+
+        router.push('/login');
+    }
 
     return (
         <SidebarMenu>
@@ -92,8 +114,15 @@ export function NavUser({
                         <DropdownMenuSeparator />
 
                         <DropdownMenuItem className="cursor-pointer">
-                            <LogOut />
-                            Log out
+                            <form onSubmit={handleSubmit} className="w-full">
+                                <button
+                                    type="submit"
+                                    disabled={pending}
+                                    className="flex w-full items-center gap-2 cursor-pointer">
+                                    <LogOut />
+                                    Log out
+                                </button>
+                            </form>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
