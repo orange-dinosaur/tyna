@@ -10,7 +10,9 @@ interface UserContextValue {
     error: Error | null;
 }
 
-const UserContext = React.createContext<UserContextValue | undefined>(undefined);
+const UserContext = React.createContext<UserContextValue | undefined>(
+    undefined
+);
 
 interface UserProviderProps {
     children: React.ReactNode;
@@ -32,7 +34,9 @@ export function UserProvider({
     // Use client-side session as source of truth (more reactive)
     // Only fall back to server user while client session is still loading
     // Once loaded, trust the client session result (even if null) to handle logout
-    const user = isPending ? (session?.user ?? serverUser) : session?.user ?? null;
+    const user = isPending
+        ? (session?.user ?? serverUser)
+        : (session?.user ?? null);
     const isLoading = isPending;
     const error = null; // better-auth handles errors internally
 

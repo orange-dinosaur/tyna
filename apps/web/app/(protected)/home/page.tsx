@@ -1,3 +1,3 @@
-export default function Login() {
-    return <div>Home</div>;
+export default function Home() {
+    return <h1 className="text-2xl font-bold">Home</h1>;
 }
