@@ -1,5 +1,6 @@
 'use server';
 
+import { headers } from 'next/headers';
 import { RegisterFormState } from '@/lib/types/auth';
 import { signupSchema } from '@/lib/schemas/auth';
 import { authClient } from '@/lib/auth-client';
@@ -49,16 +50,29 @@ export async function signup(
     }
 
     try {
-        const signupResult = await authClient.signUp.email({
-            name: validatedFields.data?.username,
-            email: validatedFields.data?.email,
-            password: validatedFields.data?.password,
-            image:
-                process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE_API +
-                validatedFields.data?.email,
-            callbackURL:
-                process.env.NEXT_PUBLIC_VERIFICATION_EMAIL_CALLBACK_URL,
-        });
+        const requestHeaders = await headers();
+        const origin =
+            requestHeaders.get('origin') ||
+            requestHeaders.get('referer')?.split('/').slice(0, 3).join('/') ||
+            process.env.NEXT_PUBLIC_AUTH_SERVER_BASE_URL;
+
+        const signupResult = await authClient.signUp.email(
+            {
+                name: validatedFields.data?.username,
+                email: validatedFields.data?.email,
+                password: validatedFields.data?.password,
+                image:
+                    process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE_API +
+                    validatedFields.data?.email,
+                callbackURL:
+                    process.env.NEXT_PUBLIC_VERIFICATION_EMAIL_CALLBACK_URL,
+            },
+            {
+                headers: {
+                    origin: origin!,
+                },
+            }
+        );
 
         if (signupResult.error) {
             returnState.status = signupResult.error.status;
