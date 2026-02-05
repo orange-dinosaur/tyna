@@ -1,0 +1,17 @@
+{
+    "name": "@workspace/convex",
+    "version": "0.0.0",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "dev": "convex dev",
+        "deploy": "convex deploy"
+    },
+    "dependencies": {
+        "convex": "^1.31.7"
+    },
+    "exports": {
+        "./api": "./api.ts",
+        "./react": "./react.ts"
+    }
+}

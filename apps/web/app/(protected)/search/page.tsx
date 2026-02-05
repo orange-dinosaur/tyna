@@ -3,15 +3,19 @@
 import { Button } from '@workspace/web-ui/components/button';
 import { Input } from '@workspace/web-ui/components/input';
 import { useState, FormEvent } from 'react';
+import { useMutation, useQuery } from 'convex/react';
+import { api } from '@workspace/convex/api';
 
 export default function Search() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchHistory, setSearchHistory] = useState<string[]>([]);
+    const searchHistory = useQuery(api.searchHistory.list);
+    const saveSearch = useMutation(api.searchHistory.create);
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (searchQuery.trim()) {
-            setSearchHistory((prev) => [...prev, searchQuery.trim()]);
+            // Save to Convex database
+            await saveSearch({ query: searchQuery.trim() });
             setSearchQuery('');
         }
     };
@@ -23,23 +27,23 @@ export default function Search() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search for books..."
+                    placeholder="Search..."
                     className="flex-1"
                 />
                 <Button type="submit">Search</Button>
             </form>
 
-            {searchHistory.length > 0 && (
+            {searchHistory && searchHistory.length > 0 && (
                 <div>
                     <h2 className="mb-2 text-lg font-semibold">
                         Search History
                     </h2>
                     <ul className="space-y-1">
-                        {searchHistory.map((query, index) => (
+                        {searchHistory.map((item) => (
                             <li
-                                key={index}
+                                key={item._id}
                                 className="rounded-md bg-gray-100 px-3 py-2">
-                                {query}
+                                {item.query}
                             </li>
                         ))}
                     </ul>
