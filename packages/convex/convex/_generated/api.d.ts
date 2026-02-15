@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as lib_workMatcher from "../lib/workMatcher.js";
 import type * as searchHistory from "../searchHistory.js";
 
 import type {
@@ -17,6 +18,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "lib/workMatcher": typeof lib_workMatcher;
   searchHistory: typeof searchHistory;
 }>;
 
