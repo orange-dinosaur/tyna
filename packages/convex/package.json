@@ -5,7 +5,8 @@
     "private": true,
     "scripts": {
         "dev": "convex dev",
-        "deploy": "convex deploy"
+        "deploy": "convex deploy",
+        "test": "vitest --run"
     },
     "dependencies": {
         "convex": "^1.31.7"
@@ -13,5 +14,9 @@
     "exports": {
         "./api": "./api.ts",
         "./react": "./react.ts"
+    },
+    "devDependencies": {
+        "fast-check": "^4.5.3",
+        "vitest": "^4.0.18"
     }
 }
