@@ -5,20 +5,28 @@ import { v } from 'convex/values';
 export const create = mutation({
     args: {
         query: v.string(),
+        userId: v.string(),
     },
     handler: async (ctx, args) => {
         const id = await ctx.db.insert('searchHistory', {
             query: args.query,
+            userId: args.userId,
             searchedAt: Date.now(),
         });
         return id;
     },
 });
 
-// Get all search history
+// Get search history for a specific user
 export const list = query({
-    args: {},
-    handler: async (ctx) => {
-        return await ctx.db.query('searchHistory').order('desc').collect();
+    args: {
+        userId: v.string(),
+    },
+    handler: async (ctx, args) => {
+        return await ctx.db
+            .query('searchHistory')
+            .withIndex('by_user', (q) => q.eq('userId', args.userId))
+            .order('desc')
+            .collect();
     },
 });

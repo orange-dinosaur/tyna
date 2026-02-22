@@ -4,8 +4,9 @@ import { v } from 'convex/values';
 export default defineSchema({
     searchHistory: defineTable({
         query: v.string(),
+        userId: v.string(),
         searchedAt: v.number(), // timestamp
-    }),
+    }).index('by_user', ['userId', 'searchedAt']),
 
     works: defineTable({
         title: v.string(),

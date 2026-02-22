@@ -1,8 +1,9 @@
 'use client';
 
-import { useAction } from 'convex/react';
+import { useAction, useMutation } from 'convex/react';
 import { api } from '@workspace/convex/api';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { useUser } from '@/components/user-provider';
 import { WorkCard } from '@/components/search/work-card';
 import { BookCard } from '@/components/search/book-card';
 
@@ -46,6 +47,9 @@ interface SearchResultsProps {
 
 export function SearchResults({ query }: SearchResultsProps) {
     const searchAction = useAction(api.search.search);
+    const { user } = useUser();
+    const saveSearch = useMutation(api.searchHistory.create);
+    const lastSavedQuery = useRef<string>('');
     const [results, setResults] = useState<SearchResultResponse | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -58,6 +62,10 @@ export function SearchResults({ query }: SearchResultsProps) {
             try {
                 const data = await searchAction({ query: q });
                 setResults(data);
+                if (user?.id && q !== lastSavedQuery.current) {
+                    lastSavedQuery.current = q;
+                    saveSearch({ query: q, userId: user.id }).catch(() => {});
+                }
             } catch (err) {
                 setError(
                     err instanceof Error
@@ -68,7 +76,7 @@ export function SearchResults({ query }: SearchResultsProps) {
                 setLoading(false);
             }
         },
-        [searchAction]
+        [searchAction, saveSearch, user]
     );
 
     useEffect(() => {
