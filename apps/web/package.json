@@ -12,9 +12,10 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@workspace/assets": "workspace:*",
         "@workspace/convex": "workspace:*",
         "@workspace/web-ui": "workspace:*",
-        "@workspace/assets": "workspace:*",
+        "better-auth": "^1.4.18",
         "convex": "^1.31.7",
         "lucide-react": "^0.475.0",
         "next": "16.1.5",
