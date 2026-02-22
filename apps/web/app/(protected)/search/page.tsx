@@ -3,52 +3,46 @@
 import { Button } from '@workspace/web-ui/components/button';
 import { Input } from '@workspace/web-ui/components/input';
 import { useState, FormEvent } from 'react';
-import { useMutation, useQuery } from 'convex/react';
-import { api } from '@workspace/convex/api';
+import { Search as SearchIcon } from 'lucide-react';
+import { SearchResults } from '@/components/search/search-results';
 
 export default function Search() {
-    const [searchQuery, setSearchQuery] = useState('');
-    const searchHistory = useQuery(api.searchHistory.list);
-    const saveSearch = useMutation(api.searchHistory.create);
+    const [inputValue, setInputValue] = useState('');
+    const [submittedQuery, setSubmittedQuery] = useState('');
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (searchQuery.trim()) {
-            // Save to Convex database
-            await saveSearch({ query: searchQuery.trim() });
-            setSearchQuery('');
+        const trimmed = inputValue.trim();
+        if (trimmed) {
+            setSubmittedQuery(trimmed);
         }
     };
 
     return (
-        <div className="space-y-6">
-            <form onSubmit={handleSubmit} className="flex items-center gap-2">
-                <Input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search..."
-                    className="flex-1"
-                />
-                <Button type="submit">Search</Button>
+        <div className="-m-4 flex h-[calc(100%+2rem)] flex-col">
+            <form
+                onSubmit={handleSubmit}
+                className="flex shrink-0 items-center gap-2 bg-background px-4 py-4">
+                <div className="relative flex-1">
+                    <SearchIcon className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        placeholder="Search for books..."
+                        className="pl-9"
+                    />
+                </div>
+                <Button
+                    type="submit"
+                    className="bg-green-500 text-white hover:bg-green-500 text-white">
+                    Search
+                </Button>
             </form>
 
-            {searchHistory && searchHistory.length > 0 && (
-                <div>
-                    <h2 className="mb-2 text-lg font-semibold">
-                        Search History
-                    </h2>
-                    <ul className="space-y-1">
-                        {searchHistory.map((item) => (
-                            <li
-                                key={item._id}
-                                className="rounded-md bg-gray-100 px-3 py-2">
-                                {item.query}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+            <div className="flex-1 overflow-auto p-4">
+                {submittedQuery && <SearchResults query={submittedQuery} />}
+            </div>
         </div>
     );
 }
