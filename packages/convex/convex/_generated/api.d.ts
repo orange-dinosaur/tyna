@@ -11,6 +11,7 @@
 import type * as lib_bookProvider from "../lib/bookProvider.js";
 import type * as lib_books from "../lib/books.js";
 import type * as lib_googleBooksProvider from "../lib/googleBooksProvider.js";
+import type * as lib_shelfLogic from "../lib/shelfLogic.js";
 import type * as lib_workMatcher from "../lib/workMatcher.js";
 import type * as search from "../search.js";
 import type * as searchHistory from "../searchHistory.js";
@@ -26,6 +27,7 @@ declare const fullApi: ApiFromModules<{
   "lib/bookProvider": typeof lib_bookProvider;
   "lib/books": typeof lib_books;
   "lib/googleBooksProvider": typeof lib_googleBooksProvider;
+  "lib/shelfLogic": typeof lib_shelfLogic;
   "lib/workMatcher": typeof lib_workMatcher;
   search: typeof search;
   searchHistory: typeof searchHistory;
