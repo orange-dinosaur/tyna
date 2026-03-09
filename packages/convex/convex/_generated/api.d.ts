@@ -14,6 +14,7 @@ import type * as lib_googleBooksProvider from "../lib/googleBooksProvider.js";
 import type * as lib_workMatcher from "../lib/workMatcher.js";
 import type * as search from "../search.js";
 import type * as searchHistory from "../searchHistory.js";
+import type * as userBooks from "../userBooks.js";
 
 import type {
   ApiFromModules,
@@ -28,6 +29,7 @@ declare const fullApi: ApiFromModules<{
   "lib/workMatcher": typeof lib_workMatcher;
   search: typeof search;
   searchHistory: typeof searchHistory;
+  userBooks: typeof userBooks;
 }>;
 
 /**
