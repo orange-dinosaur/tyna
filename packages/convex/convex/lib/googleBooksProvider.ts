@@ -2,6 +2,7 @@
  * Google Books API adapter implementing the BookProvider interface.
  */
 
+import { string } from 'fast-check';
 import type {
     BookProvider,
     BookResult,
@@ -83,6 +84,7 @@ export const googleBooksProvider: BookProvider = {
         url.searchParams.set('q', query);
         url.searchParams.set('startIndex', String(startIndex));
         url.searchParams.set('maxResults', String(maxResults));
+        url.searchParams.set('key', String(process.env.BOOKS_API_KEY));
 
         const response = await fetch(url.toString());
 
