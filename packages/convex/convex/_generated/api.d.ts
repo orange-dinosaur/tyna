@@ -9,6 +9,7 @@
  */
 
 import type * as bookNotes from "../bookNotes.js";
+import type * as enrichment from "../enrichment.js";
 import type * as lib_bookNoteLogic from "../lib/bookNoteLogic.js";
 import type * as lib_bookProvider from "../lib/bookProvider.js";
 import type * as lib_books from "../lib/books.js";
@@ -35,6 +36,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   bookNotes: typeof bookNotes;
+  enrichment: typeof enrichment;
   "lib/bookNoteLogic": typeof lib_bookNoteLogic;
   "lib/bookProvider": typeof lib_bookProvider;
   "lib/books": typeof lib_books;
