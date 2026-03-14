@@ -17,7 +17,9 @@ const bookResultArb: fc.Arbitrary<BookResult> = fc.record({
         nil: undefined,
     }),
     publishedDate: fc.option(
-        fc.date().map((d) => d.toISOString().slice(0, 10)),
+        fc
+            .date({ min: new Date('1800-01-01'), max: new Date('2100-01-01') })
+            .map((d) => d.toISOString().slice(0, 10)),
         { nil: undefined }
     ),
     pageCount: fc.option(fc.nat({ max: 2000 }), { nil: undefined }),
