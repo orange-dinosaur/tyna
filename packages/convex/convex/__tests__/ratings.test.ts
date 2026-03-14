@@ -27,10 +27,6 @@ const timestampArb = fc.integer({
 
 describe('Feature: phase2-user-features, Property 5: Rating aggregate consistency', () => {
     it('after any sequence of rate/delete operations, avgRating equals the mean of remaining scores and ratingCount equals the count', () => {
-        /**
-         * Validates: Requirements 2.1, 2.2, 2.3, 7.1, 7.2
-         */
-
         // Operation: either rate or delete
         const operationArb = fc.oneof(
             fc.record({
@@ -108,10 +104,6 @@ describe('Feature: phase2-user-features, Property 5: Rating aggregate consistenc
 
 describe('Feature: phase2-user-features, Property 6: Rating validation rejects invalid scores', () => {
     it('any score that is not an integer in [1, 5] is rejected and leaves the store unchanged', () => {
-        /**
-         * Validates: Requirements 2.4
-         */
-
         // Generate numbers that are NOT valid scores (not integers in [1,5])
         const invalidScoreArb = fc
             .oneof(

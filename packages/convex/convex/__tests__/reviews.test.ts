@@ -28,9 +28,6 @@ const timestampArb = fc.integer({
 
 describe('Feature: phase2-user-features, Property 7: Review create/query/delete round-trip', () => {
     it('creating a review and querying returns it with likeCount=0 and commentCount=0; deleting and querying returns null', () => {
-        /**
-         * Validates: Requirements 3.1, 3.3
-         */
         fc.assert(
             fc.property(
                 userIdArb,
@@ -85,9 +82,6 @@ describe('Feature: phase2-user-features, Property 7: Review create/query/delete 
 
 describe('Feature: phase2-user-features, Property 9: Review empty content rejection', () => {
     it('any string composed entirely of whitespace is rejected with a validation error', () => {
-        /**
-         * Validates: Requirements 3.4
-         */
         const whitespaceArb = fc.oneof(
             fc.constant(''),
             fc.constant(' '),
@@ -139,9 +133,6 @@ describe('Feature: phase2-user-features, Property 9: Review empty content reject
 
 describe('Feature: phase2-user-features, Property 10: Review public filtering', () => {
     it('querying public reviews returns only reviews where isPublic is true', () => {
-        /**
-         * Validates: Requirements 3.5
-         */
         const reviewDataArb = fc.record({
             userId: userIdArb,
             content: nonEmptyContentArb,
@@ -201,9 +192,6 @@ describe('Feature: phase2-user-features, Property 10: Review public filtering', 
 
 describe('Feature: phase2-user-features, Property 11: Review uniqueness per user per work', () => {
     it('creating a second review for the same user+work pair throws an error', () => {
-        /**
-         * Validates: Requirements 3.6
-         */
         fc.assert(
             fc.property(
                 userIdArb,

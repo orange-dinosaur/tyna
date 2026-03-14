@@ -35,9 +35,6 @@ const timestampArb = fc.integer({
 
 describe('Feature: phase2-user-features, Property 1: Shelf add/query round-trip', () => {
     it('adding a book to shelf and querying returns the correct entry; removing and querying returns null', () => {
-        /**
-         * Validates: Requirements 1.1, 1.5, 1.6
-         */
         fc.assert(
             fc.property(
                 userIdArb,
@@ -93,9 +90,6 @@ describe('Feature: phase2-user-features, Property 1: Shelf add/query round-trip'
 
 describe('Feature: phase2-user-features, Property 2: Shelf status update reflects correctly', () => {
     it('updating status changes the status and sets updatedAt >= createdAt', () => {
-        /**
-         * Validates: Requirements 1.2, 1.6
-         */
         fc.assert(
             fc.property(
                 userIdArb,
@@ -155,9 +149,6 @@ describe('Feature: phase2-user-features, Property 2: Shelf status update reflect
 
 describe('Feature: phase2-user-features, Property 3: Shelf filtering by status', () => {
     it('querying by status returns exactly the books with that status', () => {
-        /**
-         * Validates: Requirements 1.7
-         */
         fc.assert(
             fc.property(
                 userIdArb,
@@ -229,9 +220,6 @@ describe('Feature: phase2-user-features, Property 3: Shelf filtering by status',
 
 describe('Feature: phase2-user-features, Property 4: Shelf uniqueness invariant', () => {
     it('adding the same user+book twice throws, maintaining at most one entry', () => {
-        /**
-         * Validates: Requirements 1.8
-         */
         fc.assert(
             fc.property(
                 userIdArb,
