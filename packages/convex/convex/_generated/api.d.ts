@@ -8,6 +8,8 @@
  * @module
  */
 
+import type * as bookNotes from "../bookNotes.js";
+import type * as lib_bookNoteLogic from "../lib/bookNoteLogic.js";
 import type * as lib_bookProvider from "../lib/bookProvider.js";
 import type * as lib_books from "../lib/books.js";
 import type * as lib_googleBooksProvider from "../lib/googleBooksProvider.js";
@@ -28,6 +30,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  bookNotes: typeof bookNotes;
+  "lib/bookNoteLogic": typeof lib_bookNoteLogic;
   "lib/bookProvider": typeof lib_bookProvider;
   "lib/books": typeof lib_books;
   "lib/googleBooksProvider": typeof lib_googleBooksProvider;
