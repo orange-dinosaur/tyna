@@ -18,6 +18,7 @@ import type * as lib_reviewLogic from "../lib/reviewLogic.js";
 import type * as lib_shelfLogic from "../lib/shelfLogic.js";
 import type * as lib_workMatcher from "../lib/workMatcher.js";
 import type * as libraries from "../libraries.js";
+import type * as libraryBooks from "../libraryBooks.js";
 import type * as ratings from "../ratings.js";
 import type * as reviews from "../reviews.js";
 import type * as search from "../search.js";
@@ -41,6 +42,7 @@ declare const fullApi: ApiFromModules<{
   "lib/shelfLogic": typeof lib_shelfLogic;
   "lib/workMatcher": typeof lib_workMatcher;
   libraries: typeof libraries;
+  libraryBooks: typeof libraryBooks;
   ratings: typeof ratings;
   reviews: typeof reviews;
   search: typeof search;
