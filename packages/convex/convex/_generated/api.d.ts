@@ -13,6 +13,7 @@ import type * as lib_bookNoteLogic from "../lib/bookNoteLogic.js";
 import type * as lib_bookProvider from "../lib/bookProvider.js";
 import type * as lib_books from "../lib/books.js";
 import type * as lib_googleBooksProvider from "../lib/googleBooksProvider.js";
+import type * as lib_libraryLogic from "../lib/libraryLogic.js";
 import type * as lib_ratingLogic from "../lib/ratingLogic.js";
 import type * as lib_reviewLogic from "../lib/reviewLogic.js";
 import type * as lib_shelfLogic from "../lib/shelfLogic.js";
@@ -37,6 +38,7 @@ declare const fullApi: ApiFromModules<{
   "lib/bookProvider": typeof lib_bookProvider;
   "lib/books": typeof lib_books;
   "lib/googleBooksProvider": typeof lib_googleBooksProvider;
+  "lib/libraryLogic": typeof lib_libraryLogic;
   "lib/ratingLogic": typeof lib_ratingLogic;
   "lib/reviewLogic": typeof lib_reviewLogic;
   "lib/shelfLogic": typeof lib_shelfLogic;
